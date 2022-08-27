@@ -9,7 +9,7 @@ import reportWebVitals from "./reportWebVitals";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    {/* nesting the app in BrowserRouter allows the components to connect to the URL and render the appropriate elements*/}
+    {/* nesting the app in BrowserRouter allows us to use all the features of React Router within the app component tree*/}
     <BrowserRouter>
       <App />
     </BrowserRouter>
