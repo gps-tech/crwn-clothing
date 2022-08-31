@@ -9,13 +9,12 @@ export const ProductsContext = createContext({
 });
 
 // for any context, we need both the context value, as well as the provider itself
-export const ProductProvider = ({ children }) => {
+export const ProductsProvider = ({ children }) => {
   const [products, setProducts] = useState(PRODUCTS);
   const value = { products };
   return (
     <ProductsContext.Provider value={value}>
-      {" "}
-      {children}{" "}
+      {children}
     </ProductsContext.Provider>
   );
 };

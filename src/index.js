@@ -5,6 +5,7 @@ import { BrowserRouter } from "react-router-dom";
 
 import App from "./App";
 import { UserProvider } from "./context/user.context";
+import { ProductsProvider } from "./context/products.context";
 
 import "./index.scss";
 
@@ -14,7 +15,9 @@ render(
     {/* nesting the app in BrowserRouter allows us to use all the features of React Router within the app component tree*/}
     <BrowserRouter>
       <UserProvider>
-        <App />
+        <ProductsProvider>
+          <App />
+        </ProductsProvider>
       </UserProvider>
     </BrowserRouter>
   </React.StrictMode>,
