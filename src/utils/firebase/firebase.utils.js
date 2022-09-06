@@ -7,10 +7,18 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   signOut,
+
   // onAuthStateChanged = a way for us to hook into a stream of events
   onAuthStateChanged,
 } from "firebase/auth";
-import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc,
+  collection,
+  writeBatch,
+} from "firebase/firestore";
 
 // this config is an object that allows us to attach this firebase instance to the one that is online
 
@@ -40,6 +48,27 @@ export const signInWithGoogleRedirect = () =>
 
 //create database
 export const db = getFirestore();
+
+export const addCollectionAndDocuments = async (
+  collectionKey,
+  objectsToAdd
+) => {
+  //how we create the collection
+  //get me the collection within the db, and within the db what specific collection key are you looking for
+  const collectionRef = collection(db, collectionKey);
+
+  //how to store each of the objects inside of this new collection ref as a new document
+  //a transaction is a word that represents a successful unit of work to a db
+  const batch = writeBatch(db);
+
+  objectsToAdd.forEach((object) => {
+    const docRef = doc(collectionRef, object.title.toLowerCase());
+    batch.set(docRef, object);
+  });
+
+  await batch.commit();
+  console.log("done");
+};
 
 //function that takes auth data and store that in firestore
 export const createUserDocumentFromAuth = async (
