@@ -1,9 +1,6 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useEffect } from "react";
 
-import { addCollectionAndDocuments } from "../utils/firebase/firebase.utils.js";
-
-// you can call this whatever you want
-import SHOP_DATA from "../shop-data.js";
+import { getCategoriesAndDocuments } from "../utils/firebase/firebase.utils.js";
 
 //what do we want to store? an array of products, a function to set those products
 export const ProductsContext = createContext({
@@ -13,6 +10,14 @@ export const ProductsContext = createContext({
 // for any context, we need both the context value, as well as the provider itself
 export const ProductsProvider = ({ children }) => {
   const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    const getCategoriesMap = async () => {
+      const categoryMap = await getCategoriesAndDocuments();
+      console.log(categoryMap);
+    };
+    getCategoriesMap();
+  }, []);
 
   const value = { products };
   return (

@@ -18,6 +18,8 @@ import {
   setDoc,
   collection,
   writeBatch,
+  query,
+  getDocs,
 } from "firebase/firestore";
 
 // this config is an object that allows us to attach this firebase instance to the one that is online
@@ -68,6 +70,27 @@ export const addCollectionAndDocuments = async (
 
   await batch.commit();
   console.log("done");
+};
+
+export const getCategoriesAndDocuments = async () => {
+  const collectionRef = collection(db, "categories");
+
+  //generate query off this collectionRef.
+  const q = query(collectionRef);
+
+  //this gives us an object we can get a snapshot of
+  const querySnapshot = await getDocs(q);
+
+  //we can access diff doc snapshots. This will give us an array of all of the individual documents inside, the snapshots are the data themselves
+  const categoryMap = querySnapshot.docs.reduce((accumulator, docSnapshot) => {
+    //get data and take off the title and the items
+    const { title, items } = docSnapshot.data();
+    //the accumulator at the title value is going to be equal to the items
+    accumulator[title.toLowerCase()] = items;
+    return accumulator;
+  }, {});
+
+  return categoryMap;
 };
 
 //function that takes auth data and store that in firestore
