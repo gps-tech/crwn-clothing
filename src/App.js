@@ -12,7 +12,7 @@ function App() {
       {/* path reflects the path in the URL, element is which element needs to be rendered when the URL matches this path. You pass on a component as you would props to a child component*/}
       <Route path="/" element={<Navigation />}>
         <Route index element={<Home />} />
-        <Route path="shop" element={<Shop />} />
+        <Route path="shop/*" element={<Shop />} />
         <Route path="auth" element={<Authentication />} />
         <Route path="checkout" element={<Checkout />} />
       </Route>
